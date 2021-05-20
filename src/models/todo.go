@@ -126,3 +126,17 @@ func (todoModel TodoModel) DeleteTodo(id int64) (int64, error) {
 
 	return rows, nil
 }
+
+func (todoModel TodoModel) DeleteTodos() ( error) {
+	_, err := todoModel.Database.Exec(
+		"DELETE FROM todos",
+	)
+
+	if err != nil {
+		return err
+	}
+
+
+
+	return nil
+}

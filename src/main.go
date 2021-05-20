@@ -12,11 +12,11 @@ import (
 func main() {
 	router := router.New()
 		
-	router.GET("/todos", controller.GetUsers)
-	router.GET("/todos/{id:[0-9]+}", controller.GetUser)
-	router.DELETE("/todos/{id:[0-9]+}", controller.DeleteUser)
-	router.DELETE("/todos", controller.DeleteUser)
-	router.POST("/todos", controller.CreateUser)
+	router.GET("/todos", controller.GetTodos)
+	router.GET("/todos/{id:[0-9]+}", controller.GetTodo)
+	router.DELETE("/todos/{id:[0-9]+}", controller.DeleteTodo)
+	router.DELETE("/todos", controller.DeleteTodos)
+	router.POST("/todos", controller.CreateTodo)
 
 
 	fasthttp.ListenAndServe(

@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"github.com/valyala/fasthttp"
 	"strconv"
+
+	"github.com/brenik/test-todo/src/config"
 	"github.com/brenik/test-todo/src/entities"
 	"github.com/brenik/test-todo/src/models"
 )
 
-//var database, _ = config.GetDatabase()
+var database, _ = config.GetDatabase()
 var todoModel = models.TodoModel{database}
 
 func GetTodos(context *fasthttp.RequestCtx) {
@@ -156,6 +158,21 @@ func DeleteTodo(context *fasthttp.RequestCtx) {
 
 	_, err = todoModel.DeleteTodo(id)
 
+	if err != nil {
+		response, _ := json.Marshal(map[string]string{"error": err.Error()})
+
+		context.WriteString(string(response))
+
+		return
+	}
+
+	context.SetStatusCode(204)
+}
+
+func DeleteTodos(context *fasthttp.RequestCtx) {
+	context.SetContentType("application/json")
+
+	 err := todoModel.DeleteTodos()
 	if err != nil {
 		response, _ := json.Marshal(map[string]string{"error": err.Error()})
 
