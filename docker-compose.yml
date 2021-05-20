@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  mariadb:
+    image: tiagotrindade/lightweight-mariadb
+    env_file:
+      - .env
+    volumes:
+      - /root/docker/mariadb/var/lib/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  rest-api:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - HOST=mariadb
+      - "PORT=${PORT}"
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
